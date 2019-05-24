@@ -5,6 +5,9 @@ using UnityEngine;
 public class ActivatedMrDotBehavior : MonoBehaviour, IActivateBehavior {
 
 	public string whoCanActivateMe {get; set;}
+	List<Comp>
+
+
 
 	void Awake(){
 		whoCanActivateMe = "MrHero";
