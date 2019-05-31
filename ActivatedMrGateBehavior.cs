@@ -1,10 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivatedMrDotBehavior : MonoBehaviour, IActivateBehavior {
-
-	public string whoCanActivateMe {get; set;}
+public class ActivatedMrGateBehavior : MonoBehaviour, IActivateBehavior
+{
+    public string whoCanActivateMe {get; set;}
 	void Awake(){
 		whoCanActivateMe = "MrHero";
 	}
@@ -13,8 +13,8 @@ public class ActivatedMrDotBehavior : MonoBehaviour, IActivateBehavior {
 	public void OnTriggerEnter2D(Collider2D other){
 		if(other.gameObject.name == whoCanActivateMe)
 		{
-			if(gameObject.GetComponent<V_EatMeBehavior>() == null){
-				gameObject.AddComponent<V_EatMeBehavior>();
+			if(gameObject.GetComponent<UseItemOnMeBehavior>() == null){
+				gameObject.AddComponent<UseItemOnMeBehavior>();
 			}
 		}
 	}
@@ -22,10 +22,9 @@ public class ActivatedMrDotBehavior : MonoBehaviour, IActivateBehavior {
 	public void OnTriggerExit2D(Collider2D other){
 		if(other.gameObject.name == whoCanActivateMe)
 		{
-			if(gameObject.GetComponent<V_EatMeBehavior>() != null){
-				Destroy(gameObject.GetComponent<V_EatMeBehavior>());
+			if(gameObject.GetComponent<UseItemOnMeBehavior>() != null){
+				Destroy(gameObject.GetComponent<UseItemOnMeBehavior>());
 			}
 		}
 	}
-
 }

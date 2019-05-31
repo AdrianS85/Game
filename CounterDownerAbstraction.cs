@@ -25,10 +25,12 @@ public abstract class CounterDownerAbstraction : MonoBehaviour
 		valueStarting = start;
 	}
 
+
+
 	public delegate void ValueIsChanged(); // This only shows template for function subscribing to this delegate?
 	public static event ValueIsChanged ValueIsChangedVariable;
 
-	public delegate void ValueIs0(); // This only shows template for function subscribing to this delegate?
+	public delegate void ValueIs0();
 	public static event ValueIs0 ValueIs0Variable;
 
 	public virtual void valueChangeBy(int change)
@@ -36,11 +38,11 @@ public abstract class CounterDownerAbstraction : MonoBehaviour
 		//Need to change
 		_value = Mathf.Clamp(_value + change, valueMin, valueMax);
 
-		ValueIsChangedVariable();
+		ValueIsChangedVariable(); // This outputs info, that something changed. Therefore, child class knows to update UI appropriately
 
 		if(_value == valueMin && ValueIs0Variable != null)
 		{
-			ValueIs0Variable(); // This method will be run in subscribing objects
+			ValueIs0Variable(); // This method will be run when counter reaches minimum. This should have some special effect, such as death of a character
 			Debug.Log("DEAD");
 		}
 	}
@@ -52,8 +54,4 @@ public abstract class CounterDownerAbstraction : MonoBehaviour
 		 this.value = valueStarting;// This is to be changed due to need to save vitality throughout stages
     }
 
-	void Update()
-    {
-		//this.valueChangeBy(-1);
-    }
 }

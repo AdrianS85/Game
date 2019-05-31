@@ -1,21 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events; //
 
 public class EatMeBehavior : MonoBehaviour {
 
-	GameObject vitalityContainerObject;
-	string vitalityContainer {set; get;}
+	public delegate void AteMe(int change);
+	public static event AteMe AteMeEvent;
 
+	public int howTasty = 1;
 
-	void OnMouseOver()
+	public void OnMouseOver()
 	    {
 	        if( Input.GetMouseButtonDown(0) ){
-				vitalityContainer = "GO_Vitality";
-				Debug.Log("Nom");
-				vitalityContainerObject = GameObject.Find(vitalityContainer);
-				vitalityContainerObject.GetComponent<V_CounterDowner>().valueChangeBy(1);
-				//Debug.Log(vitalityContainerObject.name);
+				Debug.Log("EatMeBehavior: Nom " + howTasty.ToString());
+				AteMeEvent(howTasty);
 				Destroy(gameObject);
 				}
 	    }
