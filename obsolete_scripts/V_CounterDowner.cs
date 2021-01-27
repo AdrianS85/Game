@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class V_CounterDowner : CounterDownerAbstraction
+/*public class V_CounterDowner : CounterDownerAbstraction
 {
 
     // This takes
@@ -21,4 +21,4 @@ public class V_CounterDowner : CounterDownerAbstraction
 
 
 
-}
+}*/

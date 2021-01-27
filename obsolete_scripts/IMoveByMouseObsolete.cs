@@ -1,10 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // Well that doesnt work like it should
 
-public class IMoveByMouse : MonoBehaviour, IMove
+public class IMoveByMouseObsolete : MonoBehaviour
 {
 
     //GameObject hero;
