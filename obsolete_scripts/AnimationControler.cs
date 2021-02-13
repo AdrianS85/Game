@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AnimationControler : MonoBehaviour
 {
-    private Animator animator;
+    
     public bool doesHeMove;
 
     void Animate(bool doesHeMove__, string direction_)
@@ -17,31 +17,16 @@ public class AnimationControler : MonoBehaviour
         {          
             if (direction_ == "u")
             {
-                animator.Play("up");
+                
             } else if (direction_ == "d")
             {
-                animator.Play("down");
+                
             } else if (direction_ == "r")
             {
-                animator.Play("right");
+                
             } else if (direction_ == "l")
             {
-                animator.Play("left");
-            }
-        } else if (doesHeMove__ == false)
-        {          
-            if (direction_ == "u")
-            {
-                animator.Play("idle_up");
-            } else if (direction_ == "d")
-            {
-                animator.Play("idle_down");
-            } else if (direction_ == "r")
-            {
-                animator.Play("idle_right");
-            } else if (direction_ == "l")
-            {
-                animator.Play("idle_left");
+                
             }
         }
 
@@ -61,3 +46,4 @@ public class AnimationControler : MonoBehaviour
         
     }
 }
+*/
