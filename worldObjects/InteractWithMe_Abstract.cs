@@ -20,7 +20,7 @@ public abstract class InteractWithMe_Abstract : MonoBehaviour {
 
 
 
-	public void IWasInteractedWith(bool touched, bool looked, string myName){
+	public void IWasInteractedWith(bool touched, bool looked, bool combined, string myName, string interactorName){
 		if (myName == gameObject.name && isInteractionPermitedCurrently == true)
 		{
 			if (touched && this.enabled)
@@ -39,7 +39,6 @@ public abstract class InteractWithMe_Abstract : MonoBehaviour {
 		IWasClicked.HeClickedMe_Ev += IWasInteractedWith;
 		ActivateMyParentOnTriggeringMyCollider.HeroReachedMyReach_Ev += InteractionPermisionSetter;
 		MoveToMeStopAndDoStuff.StopMoving_Ev += DoThisWhenTouched;
-
 	}
 
 }

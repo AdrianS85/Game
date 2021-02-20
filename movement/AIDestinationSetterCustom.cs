@@ -23,32 +23,40 @@ namespace Pathfinding
 		PointerEventData m_PointerEventData;/// for blocking setting path when on UI
 		EventSystem m_EventSystem;/// for blocking setting path when on UI
 		bool dontMove = false;
-		IAstarAI[] iAstarAIComponents;
 
 
-
+		
 
 		public delegate void heroMovementDelegate(bool doesHeMove, Vector3 currentVelocity);
 		public static event heroMovementDelegate heroMovementEvent;
 
 
 		
-		void DontMove(string objectName){
+		void DontMove(string dummy, bool shallINotMove){
 				dontMove = true;
 		}
 
-		void StopMovingNow(string dummy){
-			foreach (IAstarAI script_ in iAstarAIComponents)
-			{
-				script_.destination = this.GetComponent<Transform>().position;
-			}
-		} /// !!! this function forces hero to look left. Myślę, że w heromovementtoanimation trzeba zmianę zrobić 
+		IEnumerator CancelMovement(){
+			ai.isStopped = true;
+
+			Vector2 movementTarget = cam.ScreenToWorldPoint(Input.mousePosition);
+			target = GameObject.Find("hero").GetComponent<Transform>();
+			ai.destination = target.position;
+
+			yield return new WaitForSeconds(0.5f);
+			
+			ai.isStopped = false;
+		}
+
+		void StopMovingNow(string gameobjectToWalkTo){
+
+			StartCoroutine(CancelMovement());
+		}
 
 
 		void Start()
 		{
 			cam = Camera.main;
-			iAstarAIComponents = this.GetComponents<IAstarAI>();
 
 			InteractWithMePerson.IWasTalkedTo_Ev += DontMove;
 			InteractWithMeObject.AteMe_Ev += DontMove;
@@ -63,7 +71,7 @@ namespace Pathfinding
 
 
 		void OnEnable () {
-			ai = GetComponent<IAstarAI>();
+			ai = GetComponent<AILerp>(); //IAstarAI
 			// Update the destination right before searching for a path as well. This is enough in theory, but this script will also update the destination every frame as the destination is used for debugging and may be used for other things by other scripts as well. So it makes sense that it is up to date every frame.
 			if (ai != null) ai.onSearchPath += Update;
 		}

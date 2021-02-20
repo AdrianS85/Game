@@ -18,7 +18,7 @@ public class MoveToMeStopAndDoStuff : MonoBehaviour
         {
             yield return null;
         }
-        StopMoving_Ev(gameObject.name); 
+        StopMoving_Ev(gameObject.name);
     }
 
     void DidWeReachInteractionRange(string objectReached, bool isItReached){
@@ -26,19 +26,14 @@ public class MoveToMeStopAndDoStuff : MonoBehaviour
         {
             canWeInteractNow = isItReached;
         }
-
-
-
-
     }
 
 
     
-    void MoveToMeStopAndDo(bool touched, bool looked, string myName){
+    void MoveToMeStopAndDo(bool touched, bool looked, bool interacted, string myName, string interactorName){
         if (myName == gameObject.name)
         {
-            Debug.Log("MoveToMeStopAndDoStuff");
-            StartCoroutine(WaitForColisionAndStopMovement());
+            StartCoroutine(WaitForColisionAndStopMovement()); // issue is - jak nie dotrzesz a miejsce, bo klikniesz gdzie indziej, a potem tam wrócisz, to automatycznie podniesie obiekt
         }
     }
 
@@ -47,6 +42,7 @@ public class MoveToMeStopAndDoStuff : MonoBehaviour
     private void Start() {
         IWasClicked.HeClickedMe_Ev += MoveToMeStopAndDo;
         ActivateMyParentOnTriggeringMyCollider.HeroReachedMyReach_Ev += DidWeReachInteractionRange;
+        DragMeToInteractWithOther.InteractionMade_Ev += MoveToMeStopAndDo;
     }
 
 

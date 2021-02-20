@@ -13,7 +13,6 @@ public class PressMeToDeactivateUISet : MonoBehaviour, IPointerDownHandler
 
     void Awake() {
         uISpawner = objectWithUISpawner.GetComponent<UISpawner>();
-        
     }
 
 
