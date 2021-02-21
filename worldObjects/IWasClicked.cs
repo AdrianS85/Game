@@ -18,6 +18,7 @@ public class IWasClicked : MonoBehaviour
         Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
         
         if( Input.GetMouseButtonDown(so.mouseButtonForUse) ){
+            
             HeClickedMe_Ev(touched:true, looked:false, interacted:false, myName:gameObject.name, interactorName:"dummy");
             }
 

@@ -48,7 +48,7 @@ namespace Pathfinding
 			ai.isStopped = false;
 		}
 
-		void StopMovingNow(string gameobjectToWalkTo){
+		void StopMovingNow(bool touched_, bool looked_, bool interacted_, string myName_, string interactorName_){
 
 			StartCoroutine(CancelMovement());
 		}
