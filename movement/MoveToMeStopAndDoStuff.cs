@@ -6,13 +6,13 @@ public class MoveToMeStopAndDoStuff : MonoBehaviour
 {
     /// !!! Now we need only for object to be picked up and we are golden
     [SerializeField] bool canWeInteractNow = false;
-    public delegate void StopMoving_Del(bool touched__, bool looked__, bool interacted__, string myName__, string interactorName__);
+    public delegate void StopMoving_Del(bool touched__, bool looked__, bool interacted__, string myName__, string interactorName__, bool ui);
     public static event StopMoving_Del StopMoving_Ev;
 
 
 
     //forIgnoringFirstClick - Cause function registers also click that started it
-    IEnumerator WaitForColisionAndStopMovement(bool touched_, bool looked_, bool interacted_, string myName_, string interactorName_){
+    IEnumerator WaitForColisionAndStopMovement(bool touched_, bool looked_, bool interacted_, string myName_, string interactorName_, bool ui){
         bool forIgnoringFirstClick = false; 
 
         while (canWeInteractNow == false)
@@ -29,7 +29,7 @@ public class MoveToMeStopAndDoStuff : MonoBehaviour
             }
             yield return null;
         }
-        StopMoving_Ev(touched_, looked_, interacted_, myName_, interactorName_);
+        StopMoving_Ev(touched_, looked_, interacted_, myName_, interactorName_, ui);
     }
 
 
@@ -43,10 +43,10 @@ public class MoveToMeStopAndDoStuff : MonoBehaviour
 
 
     
-    void MoveToMeStopAndDo(bool touched, bool looked, bool interacted, string myName, string interactorName){
+    void MoveToMeStopAndDo(bool touched, bool looked, bool interacted, string myName, string interactorName, bool ui){
         if (myName == gameObject.name)
         {
-            StartCoroutine(WaitForColisionAndStopMovement(touched, looked, interacted, myName, interactorName)); // issue is - jak nie dotrzesz a miejsce, bo klikniesz gdzie indziej, a potem tam wrócisz, to automatycznie podniesie obiekt
+            StartCoroutine(WaitForColisionAndStopMovement(touched, looked, interacted, myName, interactorName, ui)); // issue is - jak nie dotrzesz a miejsce, bo klikniesz gdzie indziej, a potem tam wrócisz, to automatycznie podniesie obiekt
         }
     }
 
@@ -55,6 +55,6 @@ public class MoveToMeStopAndDoStuff : MonoBehaviour
     private void Start() {
         IWasClicked.HeClickedMe_Ev += MoveToMeStopAndDo;
         ActivateMyParentOnTriggeringMyCollider.HeroReachedMyReach_Ev += DidWeReachInteractionRange;
-        DragMeToInteractWithOther.InteractionMade_Ev += MoveToMeStopAndDo;
+        _ToInteractWithOther.InteractionMade_Ev += MoveToMeStopAndDo;
     }
 }

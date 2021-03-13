@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DatabaseMenager : MonoBehaviour
 {
-    public databaseSpawner db;
+    public MasterDatabaseSpawner db;
     int pickupOrder = 0;
 
     public delegate void NeedToRenderInventory_Del();
@@ -15,9 +15,9 @@ public class DatabaseMenager : MonoBehaviour
 
 
 
-    void AddObjectToList(string objectName, bool yes){
+    void AddObjectToList(bool touched, bool looked, bool interacted, string myName, string interactorName, bool ui){
 
-        itemTemplateSpawner eaten_item = db.theList.Find(itemTemplateSpawner => itemTemplateSpawner.uniqueName == objectName);
+        itemTemplateSpawner eaten_item = db.objects.Find(MasterTemplateSpawner => MasterTemplateSpawner.ObjectType() == "item" && MasterTemplateSpawner.uniqueName == myName) as itemTemplateSpawner;
 
         if (eaten_item != null)
         {

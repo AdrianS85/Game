@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class GeneralSetup : MonoBehaviour
 {
     public scriptableObjectSpawner so;
 
-    //Cursor.SetCursor(Texture2D, CursorMode.Auto, Vector2.zero)
-
     void Start() {
-        //so.defaultCoursor;
+        //temp = new Sprite.Create(so.defaultCoursor, Rect rect, Vector2(0,0));
+        
+        Cursor.SetCursor(so.defaultCoursor, so.defaultCoursorHotSpot, CursorMode.Auto);
     }
+
+
 }

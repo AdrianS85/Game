@@ -6,7 +6,7 @@ using UnityEngine.Events; //
 public abstract class InteractWithMe_Abstract : MonoBehaviour {
 
 	//[SerializeField] bool isInteractionPermitedCurrently = false;
-	protected abstract void DoThisInResponse(bool touched, bool looked, bool interacted, string myName, string interactorName);
+	protected abstract void DoThisInResponse(bool touched, bool looked, bool interacted, string myName, string interactorName, bool ui);
 
 
 

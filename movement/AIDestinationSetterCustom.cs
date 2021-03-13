@@ -32,7 +32,7 @@ namespace Pathfinding
 
 
 		
-		void DontMove(string dummy, bool shallINotMove){
+		void DontMove(bool touched_, bool looked_, bool interacted_, string myName_, string interactorName_, bool ui){
 				dontMove = true;
 		}
 
@@ -48,25 +48,13 @@ namespace Pathfinding
 			ai.isStopped = false;
 		}
 
-		void StopMovingNow(bool touched_, bool looked_, bool interacted_, string myName_, string interactorName_){
+		void StopMovingNow(bool touched_, bool looked_, bool interacted_, string myName_, string interactorName_, bool ui){
 
 			StartCoroutine(CancelMovement());
 		}
 
 
-		void Start()
-		{
-			cam = Camera.main;
 
-			InteractWithMePerson.IWasTalkedTo_Ev += DontMove;
-			InteractWithMeObject.AteMe_Ev += DontMove;
-			UISpawner.UIActive_Ev += DontMove;
-			MoveToMeStopAndDoStuff.StopMoving_Ev += StopMovingNow;
-			
-			
-			m_Raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();/// for blocking setting path when on UI
-			m_EventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();/// for blocking setting path when on UI
-		}
 
 
 
@@ -74,6 +62,12 @@ namespace Pathfinding
 			ai = GetComponent<AILerp>(); //IAstarAI
 			// Update the destination right before searching for a path as well. This is enough in theory, but this script will also update the destination every frame as the destination is used for debugging and may be used for other things by other scripts as well. So it makes sense that it is up to date every frame.
 			if (ai != null) ai.onSearchPath += Update;
+			InteractWithMePerson.IWasTalkedTo_Ev += DontMove;
+			InteractWithMeObject.AteMe_Ev += DontMove;
+			MoveToMeStopAndDoStuff.StopMoving_Ev += StopMovingNow;
+			UISpawner.StopMovement_Ev += StopMovingNow;
+			UISpawner.StopMovement_Ev += DontMove;
+			PushMeToInteractWithOther.BlockMovement_Ev += DontMove;
 		}
 
 
@@ -89,13 +83,17 @@ namespace Pathfinding
 
 		/// !!! if you click very close to sprite, than proper animation does not play, but the one in which direction the sprite is rotated. This comes from eventmenger heroMovementToAnimation function which sends wrong signal about direction of animation. To jest spowodowane chyba tym, że klatka animacji generowana jest na podstawie poprzedniej klatki i następnej klatki. 
 
+		void Start() {
+			cam = Camera.main;
+			m_Raycaster = GameObject.Find("mainCanvas").GetComponent<GraphicRaycaster>();/// for blocking setting path when on UI. Also a bad ways to find gameobjects
+			m_EventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();/// for blocking setting path when on UI
+		}
+
 
 
 
 		/// Updates the AI's destination every frame
 		void Update () {
-
-			
 			if (Input.GetMouseButtonDown(so.mouseButtonForUse) == true)
 			{
 				/// for blocking setting path when on UI

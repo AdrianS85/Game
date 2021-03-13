@@ -6,7 +6,7 @@ public class InteractionMenager : MonoBehaviour
 {
     public interactionsSpawner intDb;
 
-    public void ProcessInteraction(bool touched, bool looked, bool interacted, string myName, string interactorName)
+    public void ProcessInteraction(bool touched, bool looked, bool interacted, string myName, string interactorName, bool ui)
     {     
         if (interacted)
         {
@@ -25,6 +25,6 @@ public class InteractionMenager : MonoBehaviour
 
     void Start()
     {
-        DragMeToInteractWithOther.InteractionMade_Ev += ProcessInteraction;
+        _ToInteractWithOther.InteractionMade_Ev += ProcessInteraction;
     }
 }
