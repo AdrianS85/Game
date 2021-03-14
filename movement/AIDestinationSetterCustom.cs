@@ -20,10 +20,8 @@ namespace Pathfinding
 		GameObject movementTarget_go;
 		Transform target;
 		GraphicRaycaster m_Raycaster;/// for blocking setting path when on UI
-		PointerEventData m_PointerEventData;/// for blocking setting path when on UI
 		EventSystem m_EventSystem;/// for blocking setting path when on UI
 		bool dontMove = false;
-
 
 		
 
@@ -35,6 +33,8 @@ namespace Pathfinding
 		void DontMove(bool touched_, bool looked_, bool interacted_, string myName_, string interactorName_, bool ui){
 				dontMove = true;
 		}
+
+
 
 		IEnumerator CancelMovement(){
 			ai.isStopped = true;
@@ -48,13 +48,12 @@ namespace Pathfinding
 			ai.isStopped = false;
 		}
 
+
+
 		void StopMovingNow(bool touched_, bool looked_, bool interacted_, string myName_, string interactorName_, bool ui){
 
 			StartCoroutine(CancelMovement());
 		}
-
-
-
 
 
 
@@ -67,7 +66,7 @@ namespace Pathfinding
 			MoveToMeStopAndDoStuff.StopMoving_Ev += StopMovingNow;
 			UISpawner.StopMovement_Ev += StopMovingNow;
 			UISpawner.StopMovement_Ev += DontMove;
-			PushMeToInteractWithOther.BlockMovement_Ev += DontMove;
+			PushOrDragMeToInteractWithOther.BlockMovement_Ev += DontMove;
 		}
 
 
@@ -97,10 +96,8 @@ namespace Pathfinding
 			if (Input.GetMouseButtonDown(so.mouseButtonForUse) == true)
 			{
 				/// for blocking setting path when on UI
-				m_PointerEventData = new PointerEventData(m_EventSystem);
-				m_PointerEventData.position = Input.mousePosition;
-				List<RaycastResult> results = new List<RaycastResult>();
-				m_Raycaster.Raycast(m_PointerEventData, results);
+				List<RaycastResult> results = GetUIObjectsOnMousePosition.Get(m_Raycaster, m_EventSystem);
+
 				foreach (RaycastResult result in results)
 				{
 					dontMove = true;
